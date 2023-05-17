@@ -35,7 +35,7 @@ public class UserService {
 		repo.deleteById(id);
 	}
 	public User update(User obj) {
-		User newObj = findById(obj.getId()); //instanciação do obj buscado no bdd
+		User newObj = findById(obj.getId());
 		updateData(newObj, obj);//copia os dados do OBJ para o NEWOBJ
 		return repo.save(newObj);
 	}
