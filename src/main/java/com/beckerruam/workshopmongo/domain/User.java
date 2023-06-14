@@ -3,15 +3,13 @@ package com.beckerruam.workshopmongo.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user")
-public class User implements Serializable{
-	//usado para trafegar dados
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -19,8 +17,8 @@ public class User implements Serializable{
 	private String name;
 	private String email;
 	
-	@DBRef (lazy = true) //não retornar os post de cada usuario/retornara somente se acessa-los
-	private List<Post> posts = new ArrayList<>(); //quando se tem a coleção, ja fazer instanciação
+	@DBRef(lazy = true)
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 	}
@@ -55,7 +53,7 @@ public class User implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public List<Post> getPosts() {
 		return posts;
 	}
@@ -63,10 +61,13 @@ public class User implements Serializable{
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -78,8 +79,11 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-
-
 }
